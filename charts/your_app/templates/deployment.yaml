@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-app-deployed-here
+  namespace: your-app-your-environment
+  labels:
+    app: your-app-your-environment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: your-app-your-environment
+      #tier: frontend
+  template:
+    metadata:
+      labels:
+        app: your-app-your-environment
+        #tier: frontend
+    spec: # Pod spec
+      containers:
+      - name: your-app-your-environment
+        image: devinallen/your-app-your-environment:latest
+        ports:
+        - containerPort: 3030
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3030
+          initialDelaySeconds: 3
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3030
+          initialDelaySeconds: 3
+          periodSeconds: 30
+        # envFrom:
+        # - configMapRef:
+        #     name: myconfigmapv1.0
+        # resources:
+        #   requests:
+        #     memory: "16Mi" 
+        #     cpu: "50m"    # 50 milli cores (1/20 CPU)
+        #   limits:
+        #     memory: "128Mi" # 128 mebibytes 
+        #     cpu: "100m"
