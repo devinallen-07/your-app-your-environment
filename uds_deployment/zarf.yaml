@@ -1,0 +1,28 @@
+kind: ZarfPackageConfig
+metadata:
+  name: your-app-your-environment
+  description: Hello World web app example to show deploying your app into UDS
+  version: latest
+
+components:
+  - name: your-app-your-environment
+    required: true
+    charts:
+      - name: your-app-your-environment
+        version: 'v0.1.0'
+        namespace: your-app-your-environment
+        # In this case `url` will load the helm chart located in the podinfo git repository
+        url: https://github.com/devinallen-07/your-app-your-environment.git
+        # By default git will look in the root of the git repository but you can define a sub directory with `gitPath`
+        gitPath: charts/your_app
+        valuesFiles:
+          - values.yaml
+    images:
+      - docker.io/devinallen/your-app-your-environment
+  - name: uds-package-yourapp
+    required: true
+    manifests:
+      - name: your-app-your-environment
+        namespace: your-app-your-environment
+        files:
+          - uds-package.yaml

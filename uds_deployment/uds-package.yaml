@@ -1,0 +1,14 @@
+apiVersion: uds.dev/v1alpha1
+kind: Package
+metadata:
+  name: your-app-your-environment
+  namespace: your-app-your-environment
+spec:
+  network:
+    expose:
+      - service: your-app-your-environment
+        selector:
+          app.kubernetes.io/name: your-app-your-environment
+        host: your-app-your-environment
+        gateway: tenant
+        port: 3030
